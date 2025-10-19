@@ -5,7 +5,7 @@ defineProps<{
 </script>
 
 <template>
-  <div class="text-primary text-center text-xl">
+  <div class="text-center text-xl">
     <h1>{{ msg }}</h1>
   </div>
 </template>
