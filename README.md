@@ -1,27 +1,39 @@
-# jibbleflix-app
+# 🎬 JibbleFlix App
 
-This template should help get you started developing with Vue 3 in Vite.
+**JibbleFlix** is a demo movie listing application built with **Vue 3**, **TypeScript**, and **Tailwind CSS**.  
+It showcases modern frontend development practices including component-based architecture, responsive UI, and testing with **Vitest** and **Cypress**.
 
-## Recommended IDE Setup
+This project was created as part of a **technical assessment** to demonstrate proficiency in Vue.js, TypeScript, and testing workflows.
 
-[VS Code](https://code.visualstudio.com/) + [Vue (Official)](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+---
 
-## Recommended Browser Setup
+## 🚀 Features
 
-- Chromium-based browsers (Chrome, Edge, Brave, etc.):
-  - [Vue.js devtools](https://chromewebstore.google.com/detail/vuejs-devtools/nhdogjmejiglipccpnnnanhbledajbpd) 
-  - [Turn on Custom Object Formatter in Chrome DevTools](http://bit.ly/object-formatters)
-- Firefox:
-  - [Vue.js devtools](https://addons.mozilla.org/en-US/firefox/addon/vue-js-devtools/)
-  - [Turn on Custom Object Formatter in Firefox DevTools](https://fxdx.dev/firefox-devtools-custom-object-formatters/)
+- Movie searching
+- Pagination for browsing movie results
+- Favorite movie list with local persistence
+- Fully responsive layout
+- Unit testing with Vitest  
+- End-to-end testing with Cypress
 
-## Type Support for `.vue` Imports in TS
+### 🎁 Bonus Features
 
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) to make the TypeScript language service aware of `.vue` types.
+- CI/CD integration for automated test runs on pull requests  
+- ESLint + Prettier combo for consistent and standard code quality  
 
-## Customize configuration
+---
 
-See [Vite Configuration Reference](https://vite.dev/config/).
+## 🛠️ Tech Stack
+
+- [Vue 3](https://vuejs.org/) (Composition API + `<script setup>`)
+- [TypeScript](https://www.typescriptlang.org/)
+- [Vite](https://vite.dev/) (build tool)
+- [Tailwind CSS](https://tailwindcss.com/)
+- [Vitest](https://vitest.dev/) (unit testing)
+- [Cypress](https://www.cypress.io/) (e2e testing)
+- [ESLint](https://eslint.org/) + [Prettier](https://prettier.io/) (linting and formatting)
+
+---
 
 ## Project Setup
 
