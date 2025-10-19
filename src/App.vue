@@ -7,7 +7,7 @@ import HelloWorld from './components/HelloWorld.vue'
     <img alt="JibbleFlix logo" class="h-auto w-auto" src="./assets/logo/logo.png" />
 
     <div>
-      <HelloWorld msg="Welcome JibbleFlix!" />
+      <HelloWorld msg="Welcome in JibbleFlix!" />
     </div>
   </header>
 
