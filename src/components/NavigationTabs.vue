@@ -1,11 +1,6 @@
 <script setup lang="ts">
+import type { Tab } from '@/types/movie'
 import { ref } from 'vue'
-import type { Component } from 'vue'
-
-interface Tab {
-  name: string
-  icon?: Component
-}
 
 const props = defineProps<{
   tabs: Tab[]
@@ -38,6 +33,7 @@ const isActive = (tabName: string) => activeTab.value === tabName
           v-for="(tab, idx) in tabs"
           :key="tab.name"
           href="#"
+          role="button"
           @click.prevent="selectTab(tab.name)"
           :class="[
             isActive(tab.name) ? 'text-white' : 'text-neutral-400 hover:text-white',
@@ -46,8 +42,22 @@ const isActive = (tabName: string) => activeTab.value === tabName
             'group relative min-w-0 flex-1 overflow-hidden px-4 py-4 text-center text-sm font-medium hover:bg-white/5 focus:z-10',
           ]"
           :aria-current="isActive(tab.name) ? 'page' : undefined"
+          data-cy="tab-mobile"
         >
-          <span>{{ tab.name }}</span>
+          <span>
+            {{ tab.name }}
+          </span>
+          <span
+            v-if="tab.badge"
+            :class="[
+              isActive(tab.name)
+                ? 'bg-primary-500/20 text-primary-400'
+                : 'bg-white/10 text-neutral-300',
+              'ml-2 rounded-full px-2.5 py-0.5 text-xs font-medium',
+            ]"
+          >
+            {{ tab.badge }}
+          </span>
           <span
             aria-hidden="true"
             :class="[
@@ -66,6 +76,7 @@ const isActive = (tabName: string) => activeTab.value === tabName
           v-for="tab in tabs"
           :key="tab.name"
           href="#"
+          role="button"
           @click.prevent="selectTab(tab.name)"
           :class="[
             isActive(tab.name)
@@ -74,8 +85,20 @@ const isActive = (tabName: string) => activeTab.value === tabName
             'rounded-md px-3 py-2 text-sm font-medium',
           ]"
           :aria-current="isActive(tab.name) ? 'page' : undefined"
+          data-cy="tab-desktop"
         >
           {{ tab.name }}
+          <span
+            v-if="tab.badge"
+            :class="[
+              isActive(tab.name)
+                ? 'bg-primary-500/20 text-primary-400'
+                : 'bg-white/10 text-neutral-300',
+              'ml-2 rounded-full px-2.5 py-0.5 text-xs font-medium',
+            ]"
+          >
+            {{ tab.badge }}
+          </span>
         </a>
       </nav>
     </div>

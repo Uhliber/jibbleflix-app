@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { ref, computed } from 'vue'
+import { ref, computed, watch } from 'vue'
 import type { Movie, MovieResponse, Pagination } from '@/types/movie'
 import { fetchMovies } from '@/services/movies'
 
@@ -107,12 +107,20 @@ export const useMoviesStore = defineStore('movies', () => {
     }))
   )
 
-  const favoritesWithFlag = computed<Movie[]>(() =>
-    favorites.value.map((movie) => ({
-      ...movie,
-      isFavorite: true,
-    }))
-  )
+  const highlightedFavorites = computed<Movie[]>(() => {
+    const query = searchQuery.value.trim().toLowerCase()
+    if (!query) return []
+    return favorites.value
+      .filter((movie) => movie.Title.toLowerCase().includes(query))
+      .map((movie) => ({ ...movie, isFavorite: true }))
+  })
+
+  const favoritesWithFlag = computed<Movie[]>(() => {
+    const highlightedIds = new Set(highlightedFavorites.value.map((m) => m.imdbID))
+    return favorites.value
+      .filter((movie) => !highlightedIds.has(movie.imdbID))
+      .map((movie) => ({ ...movie, isFavorite: true }))
+  })
 
   const moviesPagination = computed<Pagination>(() => {
     return {
@@ -122,6 +130,16 @@ export const useMoviesStore = defineStore('movies', () => {
       total_pages: totalPages.value,
       pages: pagination.value,
     }
+  })
+
+  let debounceTimer: ReturnType<typeof setTimeout> | null = null
+
+  watch(searchQuery, () => {
+    if (debounceTimer) clearTimeout(debounceTimer)
+    debounceTimer = setTimeout(() => {
+      currentPage.value = 1
+      loadMovies(1)
+    }, 400)
   })
 
   return {
@@ -141,6 +159,7 @@ export const useMoviesStore = defineStore('movies', () => {
     pagination,
     moviesWithFavorite,
     favoritesWithFlag,
+    highlightedFavorites,
     moviesPagination,
   }
 })

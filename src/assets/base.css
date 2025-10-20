@@ -2,11 +2,6 @@
 :root {
   --color-background: var(--color-neutral-900);
   --color-text: var(--color-white);
-
-  font-family: 'Nunito Sans', system-ui, Avenir, Helvetica, Arial, sans-serif;
-  font-size: 15px;
-  line-height: 1.6;
-  font-weight: 400;
 }
 
 *,
@@ -15,9 +10,16 @@
   box-sizing: border-box;
 }
 
+html {
+  font-size: 15px;
+  line-height: 1.6;
+  font-weight: 400;
+}
+
 body {
   min-height: 100vh;
   color: var(--color-text);
+  font-family: 'Nunito Sans', system-ui, Avenir, Helvetica, Arial, sans-serif;
   background: var(--color-background);
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;

@@ -3,8 +3,6 @@
 **JibbleFlix** is a demo movie listing application built with **Vue 3**, **TypeScript**, and **Tailwind CSS**.  
 It showcases modern frontend development practices including component-based architecture, responsive UI, and testing with **Vitest** and **Cypress**.
 
-This project was created as part of a **technical assessment** to demonstrate proficiency in Vue.js, TypeScript, and testing workflows.
-
 ---
 
 ## 🚀 Features
@@ -25,7 +23,7 @@ This project was created as part of a **technical assessment** to demonstrate pr
 
 ## 🛠️ Tech Stack
 
-- [Vue 3](https://vuejs.org/) (Composition API + `<script setup>`)
+- [Vue 3](https://vuejs.org/) (Composition API)
 - [TypeScript](https://www.typescriptlang.org/)
 - [Vite](https://vite.dev/) (build tool)
 - [Tailwind CSS](https://tailwindcss.com/)

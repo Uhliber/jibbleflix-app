@@ -1,12 +1,10 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue'
-import HelloWorld from '@/components/HelloWorld.vue'
-import IconFilm from '@/components/icons/IconFilm.vue'
-import IconStar from '@/components/icons/IconStar.vue'
-
+import { computed, onMounted, ref } from 'vue'
 import { useMoviesStore } from '@/stores/movies'
+import type { Tab } from '@/types/movie'
 import NavigationTabs from '@/components/NavigationTabs.vue'
 import MovieList from '@/components/MovieList.vue'
+import SearchInput from '@/components/SearchInput.vue'
 
 const moviesStore = useMoviesStore()
 
@@ -15,45 +13,54 @@ onMounted(async () => {
   await moviesStore.loadMovies()
 })
 
-const tabs = [
-  { name: 'Movies', icon: IconFilm },
-  { name: 'Favorites', icon: IconStar },
-]
+const tabs = computed<Tab[]>(() => [
+  { name: 'Movies' },
+  { name: 'Favorites', badge: moviesStore.favorites.length },
+])
 
-type TabName = (typeof tabs)[number]['name']
+type TabName = Tab['name']
 
 const activeTab = ref<TabName>('Movies')
 </script>
 
 <template>
-  <header class="flex justify-center">
-    <div>
+  <header class="grid justify-center">
+    <div class="grid justify-center">
       <img alt="JibbleFlix logo" class="h-auto w-auto" src="./assets/logo/logo.png" />
-      <div class="-mt-2">
-        <HelloWorld msg="Binge the Jibble Way" />
+      <div class="-mt-2 text-center text-xl">
+        <h1>Binge the Jibble Way</h1>
       </div>
     </div>
+    <SearchInput v-model="moviesStore.searchQuery" class="mt-8" />
   </header>
 
   <main class="mt-4 w-full">
     <NavigationTabs :tabs="tabs" :initialTab="activeTab" @update:activeTab="activeTab = $event" />
 
-    <div class="mt-4">
-      <MovieList
-        v-if="activeTab === 'Movies'"
-        :movies="moviesStore.moviesWithFavorite"
-        :is-loading="moviesStore.isLoading"
-        :pagination="moviesStore.moviesPagination"
-        @toggle-favorite="moviesStore.toggleFavorite"
-        @page-change="moviesStore.goToPage"
-      />
-      <MovieList
-        v-else
-        :movies="moviesStore.favoritesWithFlag"
-        :is-loading="moviesStore.isLoading"
-        @toggle-favorite="moviesStore.toggleFavorite"
-      />
-    </div>
+    <Transition name="fade" mode="out-in">
+      <div :key="activeTab" class="mt-4">
+        <MovieList
+          v-if="activeTab === 'Movies'"
+          :movies="moviesStore.moviesWithFavorite"
+          :is-loading="moviesStore.isLoading"
+          :pagination="moviesStore.moviesPagination"
+          @toggle-favorite="moviesStore.toggleFavorite"
+          @page-change="moviesStore.goToPage"
+        />
+
+        <div v-else class="grid gap-4">
+          <MovieList
+            v-if="moviesStore.highlightedFavorites.length"
+            :movies="moviesStore.highlightedFavorites"
+            @toggle-favorite="moviesStore.toggleFavorite"
+          />
+          <MovieList
+            :movies="moviesStore.favoritesWithFlag"
+            @toggle-favorite="moviesStore.toggleFavorite"
+          />
+        </div>
+      </div>
+    </Transition>
   </main>
 
   <footer>
@@ -61,4 +68,13 @@ const activeTab = ref<TabName>('Movies')
   </footer>
 </template>
 
-<style scoped></style>
+<style scoped>
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.2s ease;
+}
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+</style>

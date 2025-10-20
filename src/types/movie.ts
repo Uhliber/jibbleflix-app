@@ -5,6 +5,11 @@ export interface Movie {
   isFavorite?: boolean
 }
 
+export interface Tab {
+  name: string
+  badge?: number
+}
+
 export interface Pagination {
   page: number
   per_page: number
