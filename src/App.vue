@@ -63,8 +63,20 @@ const activeTab = ref<TabName>('Movies')
     </Transition>
   </main>
 
-  <footer>
-    <p class="text-primary-900"><span class="text-white/20">by</span> Ollie Cape 2025</p>
+  <footer class="mt-8 text-center">
+    <p class="text-primary-900">
+      <span class="text-white/20">by</span>
+      <a
+        href="https://olivercape.me/"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="text-primary-500 hover:text-primary-400 focus-visible:ring-primary-500 rounded-sm transition-colors focus-visible:ring-2 focus-visible:outline-none"
+        aria-label="Visit Oliver Cape's personal website"
+      >
+        Ollie Cape
+      </a>
+      2025
+    </p>
   </footer>
 </template>
 
