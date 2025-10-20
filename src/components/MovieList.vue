@@ -124,17 +124,30 @@ function goPrev() {
       v-if="pagination"
       class="flex items-center justify-between overflow-hidden rounded-b-lg bg-neutral-800/50 px-4 py-3 shadow-none outline-1 outline-white/10 sm:rounded-b-xl sm:-outline-offset-1"
     >
-      <div class="flex flex-1 justify-between sm:hidden">
+      <div class="flex flex-1 items-center justify-between sm:hidden">
         <a
+          role="button"
+          @click.prevent="goPrev"
           href="#"
           class="relative inline-flex items-center rounded-md border border-white/10 bg-white/5 px-4 py-2 text-sm font-medium text-neutral-200 hover:bg-white/10"
-          >Previous</a
         >
+          Previous
+        </a>
+        <div>
+          <p class="items-center text-sm text-neutral-300">
+            <span class="font-bold">{{ pagination.page }}</span>
+            {{ ' of ' }}
+            <span class="font-bold">{{ pagination.total_pages }}</span>
+          </p>
+        </div>
         <a
           href="#"
+          role="button"
+          @click.prevent="goNext"
           class="relative ml-3 inline-flex items-center rounded-md border border-white/10 bg-white/5 px-4 py-2 text-sm font-medium text-neutral-200 hover:bg-white/10"
-          >Next</a
         >
+          Next
+        </a>
       </div>
       <div class="hidden sm:flex sm:flex-1 sm:items-center sm:justify-between">
         <div>
@@ -151,20 +164,21 @@ function goPrev() {
           <nav class="isolate inline-flex -space-x-px rounded-md" aria-label="Pagination">
             <a
               href="#"
+              role="button"
               :class="[
                 { 'pointer-events-none bg-neutral-800 text-neutral-600': pagination.page <= 1 },
                 'relative inline-flex items-center rounded-l-md px-2 py-2 text-neutral-400 inset-ring inset-ring-neutral-700 hover:bg-white/5 focus:z-20 focus:outline-offset-0',
               ]"
-              @click="goPrev"
+              @click.prevent="goPrev"
             >
               <span class="sr-only">Previous</span>
               <IconChevronLeft class="size-5" aria-hidden="true" />
             </a>
-            <!-- Current: "z-10 text-white focus-visible:outline-2 focus-visible:outline-offset-2 bg-primary-500 focus-visible:outline-primary-500", Default: "inset-ring focus:outline-offset-0 text-neutral-200 inset-ring-neutral-700 hover:bg-white/5" -->
             <a
               v-for="(page, index) in pagination.pages"
               :key="`${page}-${index}`"
               href="#"
+              role="button"
               aria-current="page"
               :class="[
                 { 'pointer-events-none bg-neutral-800 text-neutral-600': page < 1 },
@@ -173,13 +187,14 @@ function goPrev() {
                   : 'text-neutral-200 inset-ring inset-ring-neutral-700 hover:bg-white/5 focus:z-20 focus:outline-offset-0',
                 'relative z-10 inline-flex items-center px-4 py-2 text-sm inset-ring inset-ring-neutral-700 focus:z-20 focus-visible:outline-2 focus-visible:outline-offset-2',
               ]"
-              @click="emit('pageChange', page)"
+              @click.prevent="emit('pageChange', page)"
             >
               {{ page > 0 ? page : '...' }}
             </a>
 
             <a
               href="#"
+              role="button"
               :class="[
                 {
                   'pointer-events-none bg-neutral-800 text-neutral-600':
@@ -187,7 +202,7 @@ function goPrev() {
                 },
                 'relative inline-flex items-center rounded-r-md px-2 py-2 text-neutral-400 inset-ring inset-ring-neutral-700 hover:bg-white/5 focus:z-20 focus:outline-offset-0',
               ]"
-              @click="goNext"
+              @click.prevent="goNext"
             >
               <span class="sr-only">Next</span>
               <IconChevronRight class="size-5" aria-hidden="true" />
