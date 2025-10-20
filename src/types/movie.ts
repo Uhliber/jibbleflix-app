@@ -1,5 +1,3 @@
-import type { Component } from 'vue'
-
 export interface Movie {
   Title: string
   Year: string
@@ -9,7 +7,6 @@ export interface Movie {
 
 export interface Tab {
   name: string
-  icon?: Component
   badge?: number
 }
 

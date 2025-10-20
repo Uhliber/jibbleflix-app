@@ -2,8 +2,6 @@
 import { computed, onMounted, ref } from 'vue'
 import { useMoviesStore } from '@/stores/movies'
 import type { Tab } from '@/types/movie'
-import IconFilm from '@/components/icons/IconFilm.vue'
-import IconStar from '@/components/icons/IconStar.vue'
 import NavigationTabs from '@/components/NavigationTabs.vue'
 import MovieList from '@/components/MovieList.vue'
 import SearchInput from '@/components/SearchInput.vue'
@@ -16,8 +14,8 @@ onMounted(async () => {
 })
 
 const tabs = computed<Tab[]>(() => [
-  { name: 'Movies', icon: IconFilm },
-  { name: 'Favorites', icon: IconStar, badge: moviesStore.favorites.length },
+  { name: 'Movies' },
+  { name: 'Favorites', badge: moviesStore.favorites.length },
 ])
 
 type TabName = Tab['name']

@@ -88,13 +88,11 @@ describe('MovieList.vue', () => {
     const next = wrapper.get('[data-cy="pagination-next"]')
     const prev = wrapper.get('[data-cy="pagination-prev"]')
 
-    // Go to next page (2 → 3)
     await next.trigger('click')
     const emitted = wrapper.emitted('pageChange')
     expect(emitted).toBeTruthy()
     expect(emitted?.[0]?.[0]).toBe(3)
 
-    // Go back (3 → 2)
     await prev.trigger('click')
     expect(emitted?.[1]?.[0]).toBe(1)
   })
