@@ -85,10 +85,12 @@ function goPrev() {
         >
           <div class="flex min-w-0 gap-x-4">
             <div class="min-w-0 flex-auto">
-              <p class="font-semibold text-white">
+              <!-- Commenting out to simulate failed test for unit and e2e testing -->
+
+              <!-- <p class="font-semibold text-white">
                 <span class="absolute inset-x-0 -top-px bottom-0" />
                 {{ movie.Title }}
-              </p>
+              </p> -->
               <p class="mt-1 flex items-center gap-2 text-sm/6 text-neutral-400">
                 <span>
                   {{ movie.Year }}
