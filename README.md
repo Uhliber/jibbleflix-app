@@ -1,5 +1,7 @@
 # 🎬 JibbleFlix App
 
+![App Screenshot](https://github.com/user-attachments/assets/646dc0ba-8a35-4adb-a599-80550a1671e5)
+
 **JibbleFlix** is a demo movie listing application built with **Vue 3**, **TypeScript**, and **Tailwind CSS**.  
 It showcases modern frontend development practices including component-based architecture, responsive UI, and testing with **Vitest** and **Cypress**.
 
