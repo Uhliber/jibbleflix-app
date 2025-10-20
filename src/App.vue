@@ -39,27 +39,30 @@ const activeTab = ref<TabName>('Movies')
   <main class="mt-4 w-full">
     <NavigationTabs :tabs="tabs" :initialTab="activeTab" @update:activeTab="activeTab = $event" />
 
-    <div class="mt-4">
-      <MovieList
-        v-if="activeTab === 'Movies'"
-        :movies="moviesStore.moviesWithFavorite"
-        :is-loading="moviesStore.isLoading"
-        :pagination="moviesStore.moviesPagination"
-        @toggle-favorite="moviesStore.toggleFavorite"
-        @page-change="moviesStore.goToPage"
-      />
-      <div v-else class="grid gap-4">
+    <Transition name="fade" mode="out-in">
+      <div :key="activeTab" class="mt-4">
         <MovieList
-          v-if="moviesStore.highlightedFavorites.length"
-          :movies="moviesStore.highlightedFavorites"
+          v-if="activeTab === 'Movies'"
+          :movies="moviesStore.moviesWithFavorite"
+          :is-loading="moviesStore.isLoading"
+          :pagination="moviesStore.moviesPagination"
           @toggle-favorite="moviesStore.toggleFavorite"
+          @page-change="moviesStore.goToPage"
         />
-        <MovieList
-          :movies="moviesStore.favoritesWithFlag"
-          @toggle-favorite="moviesStore.toggleFavorite"
-        />
+
+        <div v-else class="grid gap-4">
+          <MovieList
+            v-if="moviesStore.highlightedFavorites.length"
+            :movies="moviesStore.highlightedFavorites"
+            @toggle-favorite="moviesStore.toggleFavorite"
+          />
+          <MovieList
+            :movies="moviesStore.favoritesWithFlag"
+            @toggle-favorite="moviesStore.toggleFavorite"
+          />
+        </div>
       </div>
-    </div>
+    </Transition>
   </main>
 
   <footer>
@@ -67,4 +70,13 @@ const activeTab = ref<TabName>('Movies')
   </footer>
 </template>
 
-<style scoped></style>
+<style scoped>
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.2s ease;
+}
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+</style>

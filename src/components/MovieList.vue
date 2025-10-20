@@ -58,67 +58,79 @@ function goPrev() {
     <div
       v-if="!movies.length || isLoading"
       :class="[
-        'mt-4 flex items-center justify-center rounded-t-lg bg-neutral-800/50 outline-1 outline-white/10 sm:rounded-t-xl sm:-outline-offset-1',
+        'flex items-center justify-center rounded-t-lg bg-neutral-800/50 outline-1 outline-white/10 sm:rounded-t-xl sm:-outline-offset-1',
         { 'rounded-b-lg sm:rounded-b-xl': !pagination },
       ]"
     >
       <TheSpinner v-if="isLoading" />
       <p v-else class="px-4 py-8 text-center text-white/20">No movies available.</p>
     </div>
-    <ul
-      v-else-if="movies.length"
-      role="list"
-      :class="[
-        'mt-4 divide-y divide-white/5 overflow-hidden rounded-t-lg bg-neutral-800/50 outline-1 outline-white/10 last:outline-0 sm:rounded-t-xl sm:-outline-offset-1',
-        { 'rounded-b-lg last:outline-1 sm:rounded-b-xl': !pagination },
-      ]"
-    >
-      <li
-        v-for="movie in movies"
-        :key="movie.imdbID"
-        class="group relative flex cursor-pointer justify-between gap-x-6 px-4 py-5 hover:bg-white/2.5 sm:px-6"
-        @click="emit('toggleFavorite', movie)"
-        data-cy="movie-item"
+
+    <Transition name="fade-list" mode="out-in">
+      <ul
+        v-if="movies.length && !isLoading"
+        key="movie-list"
+        role="list"
+        :class="[
+          'divide-y divide-white/5 overflow-hidden rounded-t-lg bg-neutral-800/50 outline-1 outline-white/10 last:outline-0 sm:rounded-t-xl sm:-outline-offset-1',
+          { 'rounded-b-lg last:outline-1 sm:rounded-b-xl': !pagination },
+        ]"
       >
-        <div class="flex min-w-0 gap-x-4">
-          <div class="min-w-0 flex-auto">
-            <p class="font-semibold text-white">
-              <span class="absolute inset-x-0 -top-px bottom-0" />
-              {{ movie.Title }}
-            </p>
-            <p class="mt-1 flex text-sm/6 text-neutral-400">
-              {{ movie.Year }}
-            </p>
+        <li
+          v-for="movie in movies"
+          :key="movie.imdbID"
+          class="group relative flex cursor-pointer justify-between gap-x-6 px-4 py-5 hover:bg-white/2.5 sm:px-6"
+          @click="emit('toggleFavorite', movie)"
+          data-cy="movie-item"
+        >
+          <div class="flex min-w-0 gap-x-4">
+            <div class="min-w-0 flex-auto">
+              <p class="font-semibold text-white">
+                <span class="absolute inset-x-0 -top-px bottom-0" />
+                {{ movie.Title }}
+              </p>
+              <p class="mt-1 flex text-sm/6 text-neutral-400">
+                {{ movie.Year }}
+              </p>
+            </div>
           </div>
-        </div>
-        <div class="z-0 flex shrink-0 items-center gap-x-4">
-          <a
-            :href="`https://www.imdb.com/title/${movie.imdbID}/`"
-            class="flex items-center gap-2 rounded-full bg-white/10 px-2.5 py-2 text-xs font-semibold text-white inset-ring inset-ring-white/5 hover:bg-white/20"
-            title="View on IMDb"
-            @click.stop
-          >
-            IMDb
-            <IconArrowUpRight class="w-4 flex-none text-neutral-500" aria-hidden="true" />
-          </a>
-          <button
-            type="button"
-            :class="[
-              movie.isFavorite
-                ? 'bg-primary-600 group-hover:bg-primary-700 focus-visible:outline-primary-70000 text-white'
-                : 'bg-neutral-800 text-white/20 inset-ring inset-ring-white/5 group-hover:bg-neutral-600 focus-visible:outline-neutral-600',
-              'cursor-pointer rounded-full p-2 shadow-none focus-visible:outline-2 focus-visible:outline-offset-2',
-            ]"
-            @click.stop="emit('toggleFavorite', movie)"
-            aria-label="Toggle favorite"
-            title="Add to Favorites"
-            data-cy="favorite-button"
-          >
-            <IconStarSolid class="size-4" aria-hidden="true" />
-          </button>
-        </div>
-      </li>
-    </ul>
+          <div class="z-0 flex shrink-0 items-center gap-x-4">
+            <a
+              :href="`https://www.imdb.com/title/${movie.imdbID}/`"
+              class="group/imdb flex items-center gap-2 rounded-full bg-white/10 px-2.5 py-2 text-xs font-semibold text-white inset-ring inset-ring-white/5 transition hover:bg-white/20"
+              title="View on IMDb"
+              @click.stop
+            >
+              IMDb
+              <IconArrowUpRight
+                class="w-4 flex-none text-neutral-500 transition-transform duration-200 group-hover/imdb:translate-x-1 group-hover/imdb:-translate-y-1"
+                aria-hidden="true"
+              />
+            </a>
+
+            <button
+              type="button"
+              :class="[
+                movie.isFavorite
+                  ? 'bg-primary-600 group-hover:bg-primary-700 text-white'
+                  : 'bg-neutral-800 text-white/20 inset-ring inset-ring-white/5 group-hover:bg-neutral-600',
+                'cursor-pointer rounded-full p-2 shadow-none transition-colors duration-300 ease-in-out focus-visible:outline-2 focus-visible:outline-offset-2',
+              ]"
+              @click.stop="emit('toggleFavorite', movie)"
+              aria-label="Toggle favorite"
+              title="Add to Favorites"
+              data-cy="favorite-button"
+            >
+              <IconStarSolid
+                class="size-4 transition-transform duration-300 ease-in-out"
+                :class="{ 'text-primary-300 scale-110': movie.isFavorite }"
+                aria-hidden="true"
+              />
+            </button>
+          </div>
+        </li>
+      </ul>
+    </Transition>
     <!-- END: Movies List -->
 
     <!-- START: Pagination -->
@@ -220,4 +232,16 @@ function goPrev() {
   </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+.fade-list-enter-active,
+.fade-list-leave-active {
+  transition:
+    opacity 0.4s ease,
+    transform 0.4s ease;
+}
+.fade-list-enter-from,
+.fade-list-leave-to {
+  opacity: 0;
+  transform: translateY(10px);
+}
+</style>
