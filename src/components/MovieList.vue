@@ -89,8 +89,16 @@ function goPrev() {
                 <span class="absolute inset-x-0 -top-px bottom-0" />
                 {{ movie.Title }}
               </p>
-              <p class="mt-1 flex text-sm/6 text-neutral-400">
-                {{ movie.Year }}
+              <p class="mt-1 flex items-center gap-2 text-sm/6 text-neutral-400">
+                <span>
+                  {{ movie.Year }}
+                </span>
+                <svg viewBox="0 0 2 2" class="size-0.5 fill-current">
+                  <circle cx="1" cy="1" r="1" />
+                </svg>
+                <span>
+                  {{ `IMDb ID. ${movie.imdbID}` }}
+                </span>
               </p>
             </div>
           </div>
