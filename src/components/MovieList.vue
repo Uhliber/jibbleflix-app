@@ -81,11 +81,11 @@ function goPrev() {
       >
         <div class="flex min-w-0 gap-x-4">
           <div class="min-w-0 flex-auto">
-            <p class="text-sm/6 font-semibold text-white">
+            <p class="font-semibold text-white">
               <span class="absolute inset-x-0 -top-px bottom-0" />
               {{ movie.Title }}
             </p>
-            <p class="mt-1 flex text-xs/5 text-neutral-400">
+            <p class="mt-1 flex text-sm/6 text-neutral-400">
               {{ movie.Year }}
             </p>
           </div>

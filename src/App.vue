@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 import HelloWorld from '@/components/HelloWorld.vue'
 import IconFilm from '@/components/icons/IconFilm.vue'
 import IconStar from '@/components/icons/IconStar.vue'
@@ -7,6 +7,7 @@ import IconStar from '@/components/icons/IconStar.vue'
 import { useMoviesStore } from '@/stores/movies'
 import NavigationTabs from '@/components/NavigationTabs.vue'
 import MovieList from '@/components/MovieList.vue'
+import type { Tab } from './types/movie'
 
 const moviesStore = useMoviesStore()
 
@@ -15,12 +16,12 @@ onMounted(async () => {
   await moviesStore.loadMovies()
 })
 
-const tabs = [
+const tabs = computed<Tab[]>(() => [
   { name: 'Movies', icon: IconFilm },
-  { name: 'Favorites', icon: IconStar },
-]
+  { name: 'Favorites', icon: IconStar, badge: moviesStore.favorites.length },
+])
 
-type TabName = (typeof tabs)[number]['name']
+type TabName = Tab['name']
 
 const activeTab = ref<TabName>('Movies')
 </script>

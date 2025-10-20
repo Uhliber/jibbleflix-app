@@ -1,11 +1,6 @@
 <script setup lang="ts">
+import type { Tab } from '@/types/movie'
 import { ref } from 'vue'
-import type { Component } from 'vue'
-
-interface Tab {
-  name: string
-  icon?: Component
-}
 
 const props = defineProps<{
   tabs: Tab[]
@@ -47,7 +42,20 @@ const isActive = (tabName: string) => activeTab.value === tabName
           ]"
           :aria-current="isActive(tab.name) ? 'page' : undefined"
         >
-          <span>{{ tab.name }}</span>
+          <span>
+            {{ tab.name }}
+          </span>
+          <span
+            v-if="tab.badge"
+            :class="[
+              isActive(tab.name)
+                ? 'bg-primary-500/20 text-primary-400'
+                : 'bg-white/10 text-neutral-300',
+              'ml-2 rounded-full px-2.5 py-0.5 text-xs font-medium',
+            ]"
+          >
+            {{ tab.badge }}
+          </span>
           <span
             aria-hidden="true"
             :class="[
@@ -76,6 +84,17 @@ const isActive = (tabName: string) => activeTab.value === tabName
           :aria-current="isActive(tab.name) ? 'page' : undefined"
         >
           {{ tab.name }}
+          <span
+            v-if="tab.badge"
+            :class="[
+              isActive(tab.name)
+                ? 'bg-primary-500/20 text-primary-400'
+                : 'bg-white/10 text-neutral-300',
+              'ml-2 rounded-full px-2.5 py-0.5 text-xs font-medium',
+            ]"
+          >
+            {{ tab.badge }}
+          </span>
         </a>
       </nav>
     </div>

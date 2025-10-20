@@ -1,8 +1,16 @@
+import type { Component } from 'vue'
+
 export interface Movie {
   Title: string
   Year: string
   imdbID: string
   isFavorite?: boolean
+}
+
+export interface Tab {
+  name: string
+  icon?: Component
+  badge?: number
 }
 
 export interface Pagination {
