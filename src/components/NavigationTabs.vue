@@ -33,6 +33,7 @@ const isActive = (tabName: string) => activeTab.value === tabName
           v-for="(tab, idx) in tabs"
           :key="tab.name"
           href="#"
+          role="button"
           @click.prevent="selectTab(tab.name)"
           :class="[
             isActive(tab.name) ? 'text-white' : 'text-neutral-400 hover:text-white',
@@ -41,6 +42,7 @@ const isActive = (tabName: string) => activeTab.value === tabName
             'group relative min-w-0 flex-1 overflow-hidden px-4 py-4 text-center text-sm font-medium hover:bg-white/5 focus:z-10',
           ]"
           :aria-current="isActive(tab.name) ? 'page' : undefined"
+          data-cy="tab-mobile"
         >
           <span>
             {{ tab.name }}
@@ -74,6 +76,7 @@ const isActive = (tabName: string) => activeTab.value === tabName
           v-for="tab in tabs"
           :key="tab.name"
           href="#"
+          role="button"
           @click.prevent="selectTab(tab.name)"
           :class="[
             isActive(tab.name)
@@ -82,6 +85,7 @@ const isActive = (tabName: string) => activeTab.value === tabName
             'rounded-md px-3 py-2 text-sm font-medium',
           ]"
           :aria-current="isActive(tab.name) ? 'page' : undefined"
+          data-cy="tab-desktop"
         >
           {{ tab.name }}
           <span

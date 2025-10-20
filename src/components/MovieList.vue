@@ -78,6 +78,7 @@ function goPrev() {
         :key="movie.imdbID"
         class="group relative flex cursor-pointer justify-between gap-x-6 px-4 py-5 hover:bg-white/2.5 sm:px-6"
         @click="emit('toggleFavorite', movie)"
+        data-cy="movie-item"
       >
         <div class="flex min-w-0 gap-x-4">
           <div class="min-w-0 flex-auto">
@@ -111,6 +112,7 @@ function goPrev() {
             @click.stop="emit('toggleFavorite', movie)"
             aria-label="Toggle favorite"
             title="Add to Favorites"
+            data-cy="favorite-button"
           >
             <IconStarSolid class="size-4" aria-hidden="true" />
           </button>
@@ -170,6 +172,7 @@ function goPrev() {
                 'relative inline-flex items-center rounded-l-md px-2 py-2 text-neutral-400 inset-ring inset-ring-neutral-700 hover:bg-white/5 focus:z-20 focus:outline-offset-0',
               ]"
               @click.prevent="goPrev"
+              data-cy="pagination-prev"
             >
               <span class="sr-only">Previous</span>
               <IconChevronLeft class="size-5" aria-hidden="true" />
@@ -179,7 +182,7 @@ function goPrev() {
               :key="`${page}-${index}`"
               href="#"
               role="button"
-              aria-current="page"
+              :aria-current="pagination.page === page"
               :class="[
                 { 'pointer-events-none bg-neutral-800 text-neutral-600': page < 1 },
                 pagination.page === page
@@ -188,6 +191,7 @@ function goPrev() {
                 'relative z-10 inline-flex items-center px-4 py-2 text-sm inset-ring inset-ring-neutral-700 focus:z-20 focus-visible:outline-2 focus-visible:outline-offset-2',
               ]"
               @click.prevent="emit('pageChange', page)"
+              data-cy="pagination-page"
             >
               {{ page > 0 ? page : '...' }}
             </a>
@@ -203,6 +207,7 @@ function goPrev() {
                 'relative inline-flex items-center rounded-r-md px-2 py-2 text-neutral-400 inset-ring inset-ring-neutral-700 hover:bg-white/5 focus:z-20 focus:outline-offset-0',
               ]"
               @click.prevent="goNext"
+              data-cy="pagination-next"
             >
               <span class="sr-only">Next</span>
               <IconChevronRight class="size-5" aria-hidden="true" />

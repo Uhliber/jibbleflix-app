@@ -1,13 +1,12 @@
 <script setup lang="ts">
 import { computed, onMounted, ref } from 'vue'
-import HelloWorld from '@/components/HelloWorld.vue'
+import { useMoviesStore } from '@/stores/movies'
+import type { Tab } from '@/types/movie'
 import IconFilm from '@/components/icons/IconFilm.vue'
 import IconStar from '@/components/icons/IconStar.vue'
-
-import { useMoviesStore } from '@/stores/movies'
 import NavigationTabs from '@/components/NavigationTabs.vue'
 import MovieList from '@/components/MovieList.vue'
-import type { Tab } from './types/movie'
+import SearchInput from '@/components/SearchInput.vue'
 
 const moviesStore = useMoviesStore()
 
@@ -27,13 +26,14 @@ const activeTab = ref<TabName>('Movies')
 </script>
 
 <template>
-  <header class="flex justify-center">
-    <div>
+  <header class="grid justify-center">
+    <div class="grid justify-center">
       <img alt="JibbleFlix logo" class="h-auto w-auto" src="./assets/logo/logo.png" />
-      <div class="-mt-2">
-        <HelloWorld msg="Binge the Jibble Way" />
+      <div class="-mt-2 text-center text-xl">
+        <h1>Binge the Jibble Way</h1>
       </div>
     </div>
+    <SearchInput v-model="moviesStore.searchQuery" class="mt-8" />
   </header>
 
   <main class="mt-4 w-full">
@@ -48,12 +48,17 @@ const activeTab = ref<TabName>('Movies')
         @toggle-favorite="moviesStore.toggleFavorite"
         @page-change="moviesStore.goToPage"
       />
-      <MovieList
-        v-else
-        :movies="moviesStore.favoritesWithFlag"
-        :is-loading="moviesStore.isLoading"
-        @toggle-favorite="moviesStore.toggleFavorite"
-      />
+      <div v-else class="grid gap-4">
+        <MovieList
+          v-if="moviesStore.highlightedFavorites.length"
+          :movies="moviesStore.highlightedFavorites"
+          @toggle-favorite="moviesStore.toggleFavorite"
+        />
+        <MovieList
+          :movies="moviesStore.favoritesWithFlag"
+          @toggle-favorite="moviesStore.toggleFavorite"
+        />
+      </div>
     </div>
   </main>
 
